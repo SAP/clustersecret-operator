@@ -9,7 +9,7 @@ description: >
 
 ## Helm deployment
 
-The recommended way to deploy clustersecret-operator is to use the [included Helm chart](https://github.com/sap/clustersecret-operator-helm),
+The recommended way to deploy clustersecret-operator is to use the [Helm chart](https://github.com/sap/clustersecret-operator-helm),
 also available in packaged form:
 - as helm package: [https://sap.github.io/clustersecret-operator-helm](https://sap.github.io/clustersecret-operator-helm)
 - as OCI package: [oci://ghcr.io/sap/clustersecret-operator-helm](oci://ghcr.io/sap/clustersecret-operator-helm)
