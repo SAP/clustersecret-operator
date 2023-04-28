@@ -1,0 +1,26 @@
+# Vim recovery files
+*.swp
+# MacOS
+.DS_Store
+# Visual studio
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+# Debug artifacts
+__debug_bin
+debug.*
+# kubeconfig
+/.kubeconfig
+# local files
+/.local/ssl/*
+!/.local/ssl/*.json
+# executables
+/bin
+# hugo stuff
+.hugo_build.lock
+/website/resources
+/website/node_modules

@@ -1,0 +1,10 @@
+{
+  "CN": "clustersecret-operator.cs.sap.com",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "hosts": [
+    "host.internal"
+  ]
+}
