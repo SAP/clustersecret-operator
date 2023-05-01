@@ -5,6 +5,8 @@ on:
     types: [published]
 
   push:
+    branches:
+    - main
     paths-ignore:
     - .github/workflows/publish-website.yaml
     - README.md
