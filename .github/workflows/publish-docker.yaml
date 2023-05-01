@@ -22,7 +22,7 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  build-and-push-controller:
+  build-controller:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -61,7 +61,7 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
-  build-and-push-webhook:
+  build-webhook:
     runs-on: ubuntu-22.04
     permissions:
       contents: read
