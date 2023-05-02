@@ -1,5 +1,7 @@
 # Cluster Scope Secrets For Kubernetes
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/clustersecret-operator)](https://api.reuse.software/info/github.com/SAP/clustersecret-operator)
+
 ## About this project
 
 This repository adds cluster-scope secrets (as kind `ClusterSecret`) to Kubernetes clusters.
