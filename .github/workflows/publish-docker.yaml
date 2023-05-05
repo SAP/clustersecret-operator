@@ -27,7 +27,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-
     env:
       IMAGE_NAME: ${{ github.repository }}/controller
 
@@ -66,7 +65,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-
     env:
       IMAGE_NAME: ${{ github.repository }}/webhook
 
