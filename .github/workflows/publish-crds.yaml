@@ -31,4 +31,4 @@ jobs:
       run: |
         cd crds
         repository=${{ github.repository }}/crds
-        tar cvz * | $RUNNER_TEMP/regctl artifact put -m application/gzip $REGISTRY/${repository,,}/crds:${{ github.event.release.tag_name }}
+        tar cvz * | $RUNNER_TEMP/regctl artifact put -m application/gzip $REGISTRY/${repository,,}:${{ github.event.release.tag_name }}
