@@ -63,6 +63,8 @@ jobs:
         cache-from: |
           type=gha,scope=sha-${{ github.sha }}/controller
           type=gha,scope=${{ github.ref_name }}/controller
+          type=gha,scope=${{ github.base_ref || 'main' }}/controller
+          type=gha,scope=main/controller
         cache-to: |
           type=gha,scope=sha-${{ github.sha }}/controller,mode=max
           type=gha,scope=${{ github.ref_name }}/controller,mode=max
@@ -107,6 +109,8 @@ jobs:
         cache-from: |
           type=gha,scope=sha-${{ github.sha }}/webhook
           type=gha,scope=${{ github.ref_name }}/webhook
+          type=gha,scope=${{ github.base_ref || 'main' }}/webhook
+          type=gha,scope=main/webhook
         cache-to: |
           type=gha,scope=sha-${{ github.sha }}/webhook,mode=max
           type=gha,scope=${{ github.ref_name }}/webhook,mode=max
