@@ -64,8 +64,8 @@ jobs:
           type=gha,scope=sha-${{ github.sha }}/controller
           type=gha,scope=${{ github.ref_name }}/controller
         cache-to: |
-          type=gha,scope=sha-${{ github.sha }},mode=max
-          type=gha,scope=${{ github.ref_name }},mode=max
+          type=gha,scope=sha-${{ github.sha }}/controller,mode=max
+          type=gha,scope=${{ github.ref_name }}/controller,mode=max
         push: ${{ github.event_name == 'release' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
@@ -108,8 +108,8 @@ jobs:
           type=gha,scope=sha-${{ github.sha }}/webhook
           type=gha,scope=${{ github.ref_name }}/webhook
         cache-to: |
-          type=gha,scope=sha-${{ github.sha }},mode=max
-          type=gha,scope=${{ github.ref_name }},mode=max
+          type=gha,scope=sha-${{ github.sha }}/webhook,mode=max
+          type=gha,scope=${{ github.ref_name }}/webhook,mode=max
         push: ${{ github.event_name == 'release' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
