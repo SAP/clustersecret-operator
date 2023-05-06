@@ -60,6 +60,12 @@ jobs:
         platforms: linux/amd64,linux/arm64
         context: .
         file: build/controller/Dockerfile
+        cache-from: |
+          type=gha,scope=sha-${{ github.sha }}/controller
+          type=gha,scope=${{ github.ref_name }}/controller
+        cache-to: |
+          type=gha,scope=sha-${{ github.sha }},mode=max
+          type=gha,scope=${{ github.ref_name }},mode=max
         push: ${{ github.event_name == 'release' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
@@ -98,6 +104,12 @@ jobs:
         platforms: linux/amd64,linux/arm64
         context: .
         file: build/webhook/Dockerfile
+        cache-from: |
+          type=gha,scope=sha-${{ github.sha }}/webhook
+          type=gha,scope=${{ github.ref_name }}/webhook
+        cache-to: |
+          type=gha,scope=sha-${{ github.sha }},mode=max
+          type=gha,scope=${{ github.ref_name }},mode=max
         push: ${{ github.event_name == 'release' }}
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
