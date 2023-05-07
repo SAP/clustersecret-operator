@@ -8,6 +8,7 @@ on:
     branches:
     - main
     paths-ignore:
+    - website/**
     - .github/workflows/publish-website.yaml
     - README.md
 
@@ -15,6 +16,7 @@ on:
     branches:
     - main
     paths-ignore:
+    - website/**
     - .github/workflows/publish-website.yaml
     - README.md
 
