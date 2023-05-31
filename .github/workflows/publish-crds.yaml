@@ -7,6 +7,10 @@ on:
 env:
   REGISTRY: ghcr.io
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     runs-on: ubuntu-22.04
