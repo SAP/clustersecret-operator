@@ -41,21 +41,15 @@ test-controller:
 test-webhook:
 	@go test -v ./internal/admission
 
-# install tools
-.PHONY: install-tools
-install-tools:
-	@hack/install-tools.sh
-
 # generate code
 .PHONY: generate-code
-generate-code: install-tools
+generate-code:
 	@hack/update-codegen.sh --parallel
-	@hack/update-test-codegen.sh
 
 # format code
 .PHONY: format
-format: install-tools
-	@bin/goimports -w cmd internal pkg/apis test
+format:
+	@go fmt ./cmd/... ./internal/... ./pkg/apis/... ./test...
 
 # prepare local developement environment
 .PHONY: local-generate

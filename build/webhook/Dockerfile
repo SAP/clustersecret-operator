@@ -6,8 +6,6 @@ WORKDIR /go/src
 COPY go.mod go.mod
 COPY go.sum go.sum
 
-# Workaround: once vendored modules stored in cache/ are publicly available, the following line can be removed
-COPY cache/ cache/
 RUN go mod download -x
 
 # Caveat: when doing changes here, double-maintain them in .github/workflows
