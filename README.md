@@ -28,7 +28,10 @@ spec:
 When reconciling this object, the operator will ensure that an according regular `Secret` with the same name (`my-secret`) exists
 in all namespaces matching the provided label selector.
 
-More documentation can be found [here](https://sap.github.io/clustersecret-operator).
+## Documentation
+
+The project's documentation can be found here: [https://sap.github.io/clustersecret-operator](https://sap.github.io/clustersecret-operator).  
+The API reference is here: [https://pkg.go.dev/github.com/sap/clustersecret-operator](https://pkg.go.dev/github.com/sap/clustersecret-operator).
 
 ## Support, Feedback, Contributing
 
