@@ -100,7 +100,7 @@ section = ["HTML", "print", "RSS"]
     pre = "<i class='fab fa-github'></i>"
 
 [params]
-copyright = "Cloud Solutions - DevOps"
+copyright = "SAP Cloud Solutions - DevOps"
 # privacy_policy = "https://policies.google.com/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
