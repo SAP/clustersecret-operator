@@ -28,6 +28,14 @@ spec:
 When reconciling this object, the operator will ensure that an according regular `Secret` with the same name (`my-secret`) exists
 in all namespaces matching the provided label selector.
 
+## Requirements and Setup
+
+The recommended deployment method is to use the [Helm chart](https://github.com/sap/clustersecret-operator-helm):
+
+```bash
+helm upgrade -i clustersecret-operator oci://ghcr.io/sap/clustersecret-operator-helm/clustersecret-operator
+```
+
 ## Documentation
 
 The project's documentation can be found here: [https://sap.github.io/clustersecret-operator](https://sap.github.io/clustersecret-operator).  
