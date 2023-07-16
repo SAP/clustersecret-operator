@@ -11,6 +11,7 @@ fi
 
 cd $(dirname "${BASH_SOURCE[0]}")/..
 
+go mod download k8s.io/code-generator
 CODEGEN_PKG=$(go list -m -f '{{.Dir}}' k8s.io/code-generator)
 GEN_PKG_PATH=$(go list -m)/pkg
 OUTPUT_BASE=$(mktemp -d)
@@ -26,6 +27,6 @@ trap 'rm -rf "${OUTPUT_BASE}"' EXIT
   "${GEN_PKG_PATH}"/client "${GEN_PKG_PATH}"/apis \
   core.cs.sap.com:v1alpha1 \
   --output-base "${OUTPUT_BASE}"/ \
-  --go-header-file ./hack/LICENSE_BOILERPLATE.txt
+  --go-header-file ./hack/boilerplate.go.txt
 
 rm -rf "./pkg/client" && cp -Rf "${OUTPUT_BASE}"/"${GEN_PKG_PATH}" .

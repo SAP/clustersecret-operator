@@ -42,8 +42,8 @@ test-webhook:
 	@go test -v ./internal/admission
 
 # generate code
-.PHONY: generate-code
-generate-code:
+.PHONY: generate
+generate:
 	@hack/update-codegen.sh --parallel
 
 # format code
