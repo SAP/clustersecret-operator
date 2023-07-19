@@ -53,6 +53,11 @@ jobs:
           exit 1
         fi
 
+    - name: Run tests
+      run: |
+        make envtest
+        KUBEBUILDER_ASSETS=$(pwd)/bin/k8s/current E2E_ENABLED=${{ github.event_name == 'push' }} go test -count 1 ./...
+
   build-docker_controller:
     name: Build Docker image (controller)
     runs-on: ubuntu-22.04
@@ -162,3 +167,4 @@ jobs:
       with:
         name: image_webhook.tar
         path: ${{ runner.temp }}/image_webhook.tar
+
