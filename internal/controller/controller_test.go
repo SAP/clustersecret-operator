@@ -29,7 +29,7 @@ func TestController1(t *testing.T) {
 	defer cancel()
 
 	clusterSecret := env.MustFatal(t).CreateClusterSecretFromFile("clustersecret.yaml")
-	clusterSecret = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret)
+	_ = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret)
 	env.MustError(t).AssertSecretFromFile("secret.yaml")
 }
 
@@ -76,7 +76,7 @@ func TestController2(t *testing.T) {
 	env.MustError(t).AssertSecretFromFile("secret-4.yaml")
 
 	env.CreateNamespaceFromFile("namespace-5.yaml")
-	clusterSecret = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret)
+	_ = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret)
 	env.MustError(t).AssertSecretCount("", "clustersecrets.core.cs.sap.com/name=my-secret", 2)
 	env.MustError(t).AssertSecretFromFile("secret-4.yaml")
 	env.MustError(t).AssertSecretFromFile("secret-5.yaml")
@@ -106,13 +106,13 @@ func TestController3(t *testing.T) {
 	env.MustError(t).AssertSecretFromFile("secret-a-1.yaml")
 
 	env.MustFatal(t).UpdateClusterSecretFromFile("clustersecret-a-updated.yaml")
-	clusterSecret_a = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret_a)
+	_ = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret_a)
 	env.MustError(t).AssertSecretCount("", "clustersecrets.core.cs.sap.com/name=my-secret-a", 2)
 	env.MustError(t).AssertSecretFromFile("secret-a-updated-1.yaml")
 	env.MustError(t).AssertSecretFromFile("secret-a-updated-2.yaml")
 
 	clusterSecret_b := env.MustFatal(t).CreateClusterSecretFromFile("clustersecret-b.yaml")
-	clusterSecret_b = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret_b)
+	_ = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret_b)
 	env.MustError(t).AssertSecretCount("", "clustersecrets.core.cs.sap.com/name", 3)
 	env.MustError(t).AssertSecretFromFile("secret-a-updated-1.yaml")
 	env.MustError(t).AssertSecretFromFile("secret-a-updated-2.yaml")
@@ -146,7 +146,7 @@ func TestController4(t *testing.T) {
 	defer cancel()
 
 	clusterSecret_a = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret_a)
-	clusterSecret_b = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret_b)
+	_ = env.MustFatal(t).WaitForClusterSecretReady(clusterSecret_b)
 	env.MustError(t).AssertSecretCount("", "clustersecrets.core.cs.sap.com/name", 2)
 	env.MustError(t).AssertSecret(secret_a_1)
 	env.MustError(t).AssertSecret(secret_b_2)

@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 
 package v1alpha1
 
-// ClusterSecretStatusApplyConfiguration represents an declarative configuration of the ClusterSecretStatus type for use
+// ClusterSecretStatusApplyConfiguration represents a declarative configuration of the ClusterSecretStatus type for use
 // with apply.
 type ClusterSecretStatusApplyConfiguration struct {
 	ObservedGeneration *int64                                     `json:"observedGeneration,omitempty"`
@@ -15,7 +15,7 @@ type ClusterSecretStatusApplyConfiguration struct {
 	Conditions         []ClusterSecretConditionApplyConfiguration `json:"conditions,omitempty"`
 }
 
-// ClusterSecretStatusApplyConfiguration constructs an declarative configuration of the ClusterSecretStatus type for use with
+// ClusterSecretStatusApplyConfiguration constructs a declarative configuration of the ClusterSecretStatus type for use with
 // apply.
 func ClusterSecretStatus() *ClusterSecretStatusApplyConfiguration {
 	return &ClusterSecretStatusApplyConfiguration{}

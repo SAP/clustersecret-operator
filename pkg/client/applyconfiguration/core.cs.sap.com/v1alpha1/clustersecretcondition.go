@@ -13,7 +13,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// ClusterSecretConditionApplyConfiguration represents an declarative configuration of the ClusterSecretCondition type for use
+// ClusterSecretConditionApplyConfiguration represents a declarative configuration of the ClusterSecretCondition type for use
 // with apply.
 type ClusterSecretConditionApplyConfiguration struct {
 	Type               *v1alpha1.ClusterSecretConditionType `json:"type,omitempty"`
@@ -24,7 +24,7 @@ type ClusterSecretConditionApplyConfiguration struct {
 	Message            *string                              `json:"message,omitempty"`
 }
 
-// ClusterSecretConditionApplyConfiguration constructs an declarative configuration of the ClusterSecretCondition type for use with
+// ClusterSecretConditionApplyConfiguration constructs a declarative configuration of the ClusterSecretCondition type for use with
 // apply.
 func ClusterSecretCondition() *ClusterSecretConditionApplyConfiguration {
 	return &ClusterSecretConditionApplyConfiguration{}
