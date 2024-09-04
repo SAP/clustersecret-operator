@@ -11,7 +11,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 )
 
-// SecretTemplateSpecApplyConfiguration represents an declarative configuration of the SecretTemplateSpec type for use
+// SecretTemplateSpecApplyConfiguration represents a declarative configuration of the SecretTemplateSpec type for use
 // with apply.
 type SecretTemplateSpecApplyConfiguration struct {
 	Type       *v1.SecretType    `json:"type,omitempty"`
@@ -19,7 +19,7 @@ type SecretTemplateSpecApplyConfiguration struct {
 	StringData map[string]string `json:"stringData,omitempty"`
 }
 
-// SecretTemplateSpecApplyConfiguration constructs an declarative configuration of the SecretTemplateSpec type for use with
+// SecretTemplateSpecApplyConfiguration constructs a declarative configuration of the SecretTemplateSpec type for use with
 // apply.
 func SecretTemplateSpec() *SecretTemplateSpecApplyConfiguration {
 	return &SecretTemplateSpecApplyConfiguration{}

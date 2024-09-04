@@ -8,17 +8,17 @@ SPDX-License-Identifier: Apache-2.0
 package v1alpha1
 
 import (
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	v1 "k8s.io/client-go/applyconfigurations/meta/v1"
 )
 
-// ClusterSecretSpecApplyConfiguration represents an declarative configuration of the ClusterSecretSpec type for use
+// ClusterSecretSpecApplyConfiguration represents a declarative configuration of the ClusterSecretSpec type for use
 // with apply.
 type ClusterSecretSpecApplyConfiguration struct {
-	NamespaceSelector *v1.LabelSelector                     `json:"namespaceSelector,omitempty"`
+	NamespaceSelector *v1.LabelSelectorApplyConfiguration   `json:"namespaceSelector,omitempty"`
 	Template          *SecretTemplateSpecApplyConfiguration `json:"template,omitempty"`
 }
 
-// ClusterSecretSpecApplyConfiguration constructs an declarative configuration of the ClusterSecretSpec type for use with
+// ClusterSecretSpecApplyConfiguration constructs a declarative configuration of the ClusterSecretSpec type for use with
 // apply.
 func ClusterSecretSpec() *ClusterSecretSpecApplyConfiguration {
 	return &ClusterSecretSpecApplyConfiguration{}
@@ -27,8 +27,8 @@ func ClusterSecretSpec() *ClusterSecretSpecApplyConfiguration {
 // WithNamespaceSelector sets the NamespaceSelector field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the NamespaceSelector field is set to the value of the last call.
-func (b *ClusterSecretSpecApplyConfiguration) WithNamespaceSelector(value v1.LabelSelector) *ClusterSecretSpecApplyConfiguration {
-	b.NamespaceSelector = &value
+func (b *ClusterSecretSpecApplyConfiguration) WithNamespaceSelector(value *v1.LabelSelectorApplyConfiguration) *ClusterSecretSpecApplyConfiguration {
+	b.NamespaceSelector = value
 	return b
 }
 
