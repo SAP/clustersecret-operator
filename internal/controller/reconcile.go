@@ -53,7 +53,7 @@ func (c *Controller) reconcileNamespace(namespaceName string) error {
 		if errors.IsNotFound(err) {
 			// that is a bit strange, since this should be only triggered after namespace create/update events
 			// however it may happen if the  namespace has been deleted concurrently
-			klog.Warning("namespace %s does not exist; skipping reconcile", namespaceName)
+			klog.Warningf("namespace %s does not exist; skipping reconcile", namespaceName)
 			return nil
 		} else {
 			return err

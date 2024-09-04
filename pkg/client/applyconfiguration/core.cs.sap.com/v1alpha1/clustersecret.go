@@ -13,7 +13,7 @@ import (
 	v1 "k8s.io/client-go/applyconfigurations/meta/v1"
 )
 
-// ClusterSecretApplyConfiguration represents an declarative configuration of the ClusterSecret type for use
+// ClusterSecretApplyConfiguration represents a declarative configuration of the ClusterSecret type for use
 // with apply.
 type ClusterSecretApplyConfiguration struct {
 	v1.TypeMetaApplyConfiguration    `json:",inline"`
@@ -22,7 +22,7 @@ type ClusterSecretApplyConfiguration struct {
 	Status                           *ClusterSecretStatusApplyConfiguration `json:"status,omitempty"`
 }
 
-// ClusterSecret constructs an declarative configuration of the ClusterSecret type for use with
+// ClusterSecret constructs a declarative configuration of the ClusterSecret type for use with
 // apply.
 func ClusterSecret(name string) *ClusterSecretApplyConfiguration {
 	b := &ClusterSecretApplyConfiguration{}
@@ -204,4 +204,10 @@ func (b *ClusterSecretApplyConfiguration) WithSpec(value *ClusterSecretSpecApply
 func (b *ClusterSecretApplyConfiguration) WithStatus(value *ClusterSecretStatusApplyConfiguration) *ClusterSecretApplyConfiguration {
 	b.Status = value
 	return b
+}
+
+// GetName retrieves the value of the Name field in the declarative configuration.
+func (b *ClusterSecretApplyConfiguration) GetName() *string {
+	b.ensureObjectMetaApplyConfigurationExists()
+	return b.Name
 }

@@ -9,24 +9,31 @@ if ! which go >/dev/null; then
   exit 1
 fi
 
-cd $(dirname "${BASH_SOURCE[0]}")/..
+cd "$(dirname "${BASH_SOURCE[0]}")"/..
 
 go mod download k8s.io/code-generator
 CODEGEN_PKG=$(go list -m -f '{{.Dir}}' k8s.io/code-generator)
 GEN_PKG_PATH=$(go list -m)/pkg
-OUTPUT_BASE=$(mktemp -d)
-
-trap 'rm -rf "${OUTPUT_BASE}"' EXIT
+OUTPUT_PATH=$(mktemp -d)
+trap 'rm -rf "${OUTPUT_PATH}"' EXIT
 
 # echo "PWD: ${PWD}"
 # echo "CODEGEN_PKG: ${CODEGEN_PKG}"
 # echo "GEN_PKG_PATH: ${GEN_PKG_PATH}"
-# echo "OUTPUT_BASE: ${OUTPUT_BASE}"
+# echo "OUTPUT_PATH: ${OUTPUT_PATH}"
 
-/bin/bash "${CODEGEN_PKG}"/generate-groups.sh all \
-  "${GEN_PKG_PATH}"/client "${GEN_PKG_PATH}"/apis \
-  core.cs.sap.com:v1alpha1 \
-  --output-base "${OUTPUT_BASE}"/ \
-  --go-header-file ./hack/boilerplate.go.txt
+source "${CODEGEN_PKG}"/kube_codegen.sh
 
-rm -rf "./pkg/client" && cp -Rf "${OUTPUT_BASE}"/"${GEN_PKG_PATH}" .
+kube::codegen::gen_helpers \
+  --boilerplate ./hack/boilerplate.go.txt \
+  ./pkg/apis
+
+kube::codegen::gen_client \
+  --with-watch \
+  --with-applyconfig \
+  --output-dir "${OUTPUT_PATH}"/client \
+  --output-pkg "${GEN_PKG_PATH}"/client \
+  --boilerplate ./hack/boilerplate.go.txt \
+  ./pkg/apis
+
+rm -rf "./pkg/client" && cp -Rf "${OUTPUT_PATH}"/client ./pkg

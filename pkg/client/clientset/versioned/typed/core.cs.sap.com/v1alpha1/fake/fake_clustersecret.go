@@ -32,20 +32,22 @@ var clustersecretsKind = v1alpha1.SchemeGroupVersion.WithKind("ClusterSecret")
 
 // Get takes name of the clusterSecret, and returns the corresponding clusterSecret object, and an error if there is any.
 func (c *FakeClusterSecrets) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.ClusterSecret, err error) {
+	emptyResult := &v1alpha1.ClusterSecret{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootGetAction(clustersecretsResource, name), &v1alpha1.ClusterSecret{})
+		Invokes(testing.NewRootGetActionWithOptions(clustersecretsResource, name, options), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.ClusterSecret), err
 }
 
 // List takes label and field selectors, and returns the list of ClusterSecrets that match those selectors.
 func (c *FakeClusterSecrets) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.ClusterSecretList, err error) {
+	emptyResult := &v1alpha1.ClusterSecretList{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootListAction(clustersecretsResource, clustersecretsKind, opts), &v1alpha1.ClusterSecretList{})
+		Invokes(testing.NewRootListActionWithOptions(clustersecretsResource, clustersecretsKind, opts), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 
 	label, _, _ := testing.ExtractFromListOptions(opts)
@@ -64,36 +66,39 @@ func (c *FakeClusterSecrets) List(ctx context.Context, opts v1.ListOptions) (res
 // Watch returns a watch.Interface that watches the requested clusterSecrets.
 func (c *FakeClusterSecrets) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
 	return c.Fake.
-		InvokesWatch(testing.NewRootWatchAction(clustersecretsResource, opts))
+		InvokesWatch(testing.NewRootWatchActionWithOptions(clustersecretsResource, opts))
 }
 
 // Create takes the representation of a clusterSecret and creates it.  Returns the server's representation of the clusterSecret, and an error, if there is any.
 func (c *FakeClusterSecrets) Create(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.CreateOptions) (result *v1alpha1.ClusterSecret, err error) {
+	emptyResult := &v1alpha1.ClusterSecret{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootCreateAction(clustersecretsResource, clusterSecret), &v1alpha1.ClusterSecret{})
+		Invokes(testing.NewRootCreateActionWithOptions(clustersecretsResource, clusterSecret, opts), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.ClusterSecret), err
 }
 
 // Update takes the representation of a clusterSecret and updates it. Returns the server's representation of the clusterSecret, and an error, if there is any.
 func (c *FakeClusterSecrets) Update(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.UpdateOptions) (result *v1alpha1.ClusterSecret, err error) {
+	emptyResult := &v1alpha1.ClusterSecret{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootUpdateAction(clustersecretsResource, clusterSecret), &v1alpha1.ClusterSecret{})
+		Invokes(testing.NewRootUpdateActionWithOptions(clustersecretsResource, clusterSecret, opts), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.ClusterSecret), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeClusterSecrets) UpdateStatus(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.UpdateOptions) (*v1alpha1.ClusterSecret, error) {
+func (c *FakeClusterSecrets) UpdateStatus(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.UpdateOptions) (result *v1alpha1.ClusterSecret, err error) {
+	emptyResult := &v1alpha1.ClusterSecret{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootUpdateSubresourceAction(clustersecretsResource, "status", clusterSecret), &v1alpha1.ClusterSecret{})
+		Invokes(testing.NewRootUpdateSubresourceActionWithOptions(clustersecretsResource, "status", clusterSecret, opts), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.ClusterSecret), err
 }
@@ -107,7 +112,7 @@ func (c *FakeClusterSecrets) Delete(ctx context.Context, name string, opts v1.De
 
 // DeleteCollection deletes a collection of objects.
 func (c *FakeClusterSecrets) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewRootDeleteCollectionAction(clustersecretsResource, listOpts)
+	action := testing.NewRootDeleteCollectionActionWithOptions(clustersecretsResource, opts, listOpts)
 
 	_, err := c.Fake.Invokes(action, &v1alpha1.ClusterSecretList{})
 	return err
@@ -115,10 +120,11 @@ func (c *FakeClusterSecrets) DeleteCollection(ctx context.Context, opts v1.Delet
 
 // Patch applies the patch and returns the patched clusterSecret.
 func (c *FakeClusterSecrets) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.ClusterSecret, err error) {
+	emptyResult := &v1alpha1.ClusterSecret{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootPatchSubresourceAction(clustersecretsResource, name, pt, data, subresources...), &v1alpha1.ClusterSecret{})
+		Invokes(testing.NewRootPatchSubresourceActionWithOptions(clustersecretsResource, name, pt, data, opts, subresources...), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.ClusterSecret), err
 }
@@ -136,10 +142,11 @@ func (c *FakeClusterSecrets) Apply(ctx context.Context, clusterSecret *corecssap
 	if name == nil {
 		return nil, fmt.Errorf("clusterSecret.Name must be provided to Apply")
 	}
+	emptyResult := &v1alpha1.ClusterSecret{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootPatchSubresourceAction(clustersecretsResource, *name, types.ApplyPatchType, data), &v1alpha1.ClusterSecret{})
+		Invokes(testing.NewRootPatchSubresourceActionWithOptions(clustersecretsResource, *name, types.ApplyPatchType, data, opts.ToPatchOptions()), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.ClusterSecret), err
 }
@@ -158,10 +165,11 @@ func (c *FakeClusterSecrets) ApplyStatus(ctx context.Context, clusterSecret *cor
 	if name == nil {
 		return nil, fmt.Errorf("clusterSecret.Name must be provided to Apply")
 	}
+	emptyResult := &v1alpha1.ClusterSecret{}
 	obj, err := c.Fake.
-		Invokes(testing.NewRootPatchSubresourceAction(clustersecretsResource, *name, types.ApplyPatchType, data, "status"), &v1alpha1.ClusterSecret{})
+		Invokes(testing.NewRootPatchSubresourceActionWithOptions(clustersecretsResource, *name, types.ApplyPatchType, data, opts.ToPatchOptions(), "status"), emptyResult)
 	if obj == nil {
-		return nil, err
+		return emptyResult, err
 	}
 	return obj.(*v1alpha1.ClusterSecret), err
 }

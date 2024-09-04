@@ -9,8 +9,8 @@ package v1alpha1
 
 import (
 	v1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
-	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/labels"
+	"k8s.io/client-go/listers"
 	"k8s.io/client-go/tools/cache"
 )
 
@@ -28,30 +28,10 @@ type ClusterSecretLister interface {
 
 // clusterSecretLister implements the ClusterSecretLister interface.
 type clusterSecretLister struct {
-	indexer cache.Indexer
+	listers.ResourceIndexer[*v1alpha1.ClusterSecret]
 }
 
 // NewClusterSecretLister returns a new ClusterSecretLister.
 func NewClusterSecretLister(indexer cache.Indexer) ClusterSecretLister {
-	return &clusterSecretLister{indexer: indexer}
-}
-
-// List lists all ClusterSecrets in the indexer.
-func (s *clusterSecretLister) List(selector labels.Selector) (ret []*v1alpha1.ClusterSecret, err error) {
-	err = cache.ListAll(s.indexer, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha1.ClusterSecret))
-	})
-	return ret, err
-}
-
-// Get retrieves the ClusterSecret from the index for a given name.
-func (s *clusterSecretLister) Get(name string) (*v1alpha1.ClusterSecret, error) {
-	obj, exists, err := s.indexer.GetByKey(name)
-	if err != nil {
-		return nil, err
-	}
-	if !exists {
-		return nil, errors.NewNotFound(v1alpha1.Resource("clustersecret"), name)
-	}
-	return obj.(*v1alpha1.ClusterSecret), nil
+	return &clusterSecretLister{listers.New[*v1alpha1.ClusterSecret](indexer, v1alpha1.Resource("clustersecret"))}
 }
