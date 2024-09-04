@@ -11,16 +11,13 @@
 *.code-workspace
 .history/
 # Debug artifacts
-__debug_bin
+__debug_bin*
 debug.*
-# kubeconfig
-/.kubeconfig
-# local files
-/.local/ssl/*
-!/.local/ssl/*.json
 # executables
 /bin
 # hugo stuff
 .hugo_build.lock
 /website/resources
 /website/node_modules
+# temp stuff
+/tmp

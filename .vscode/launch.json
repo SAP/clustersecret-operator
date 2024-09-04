@@ -11,7 +11,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/controller",
             "args": [
-                "--kubeconfig=${workspaceFolder}/.kubeconfig",
+                "--kubeconfig=${workspaceFolder}/tmp/kubeconfig",
                 "--lease_namespace=default",
                 "--lease_name=clustersecret-operator",
                 "--lease_id=1",
@@ -27,8 +27,8 @@
             "args": [
                 "--bind_address=:2443",
                 "--tls_enabled=true",
-                "--tls_key_file=${workspaceFolder}/.local/ssl/webhook-key.pem",
-                "--tls_cert_file=${workspaceFolder}/.local/ssl/webhook.pem",
+                "--tls_key_file=${workspaceFolder}/tmp/ssl/tls.key",
+                "--tls_cert_file=${workspaceFolder}/tmp/ssl/tls.crt",
                 "--v=2"
             ]
         }

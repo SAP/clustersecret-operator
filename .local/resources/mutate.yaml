@@ -1,0 +1,28 @@
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: clustersecret-operator
+webhooks:
+- name: mutate.clustersecrets.core.cs.sap.com
+  admissionReviewVersions:
+  - v1
+  clientConfig:
+    caBundle: ${WEBHOOK_CA_CERT}
+    url: https://${WEBHOOK_HOSTNAME}:2443/mutation
+  rules:
+  - apiGroups:
+    - core.cs.sap.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - clustersecrets
+    scope: Cluster
+  matchPolicy: Equivalent
+  sideEffects: None
+  timeoutSeconds: 10
+  failurePolicy: Fail
+  reinvocationPolicy: Never

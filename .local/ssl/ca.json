@@ -1,5 +1,5 @@
 {
-  "CN": "clustersecret-operator-ca",
+  "CN": "local-ca",
   "key": {
     "algo": "rsa",
     "size": 2048

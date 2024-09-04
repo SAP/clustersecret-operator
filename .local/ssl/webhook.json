@@ -1,10 +1,14 @@
 {
-  "CN": "clustersecret-operator.cs.sap.com",
+  "CN": "clustersecret-operator-webhook.default.svc.cluster.local",
   "key": {
     "algo": "rsa",
     "size": 2048
   },
   "hosts": [
-    "host.internal"
+    "clustersecret-operator-webhook.default.svc.cluster.local",
+    "clustersecret-operator-webhook.default.svc",
+    "clustersecret-operator-webhook.default",
+    "*.internal",
+    "localhost"
   ]
 }
