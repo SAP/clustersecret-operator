@@ -2,7 +2,7 @@
 // +build tools
 
 /*
-SPDX-FileCopyrightText: 2023 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
