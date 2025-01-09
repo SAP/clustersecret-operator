@@ -4,6 +4,6 @@
     "postcss-cli": "11.0.0"
   },
   "dependencies": {
-    "node": "23.5.0"
+    "node": "23.6.0"
   }
 }
