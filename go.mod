@@ -3,7 +3,7 @@ module github.com/sap/clustersecret-operator
 go 1.23.5
 
 require (
-	github.com/evanphx/json-patch/v5 v5.9.10
+	github.com/evanphx/json-patch/v5 v5.9.11
 	github.com/google/uuid v1.6.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/spf13/pflag v1.0.5
