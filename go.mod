@@ -13,7 +13,7 @@ require (
 	k8s.io/client-go v0.31.0
 	k8s.io/code-generator v0.31.0
 	k8s.io/klog/v2 v2.130.1
-	sigs.k8s.io/structured-merge-diff/v4 v4.4.1
+	sigs.k8s.io/structured-merge-diff/v4/v6 v6.0.0
 )
 
 require (
