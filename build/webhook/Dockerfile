@@ -1,5 +1,5 @@
 ### build go executable
-FROM --platform=$BUILDPLATFORM golang:1.24.4 AS build
+FROM --platform=$BUILDPLATFORM golang:1.24.5 AS build
 
 WORKDIR /go/src
 
