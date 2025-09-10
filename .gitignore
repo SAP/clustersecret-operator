@@ -11,7 +11,7 @@
 *.code-workspace
 .history/
 # Debug artifacts
-__debug_bin*
+*__debug_bin*
 debug.*
 # executables
 /bin
