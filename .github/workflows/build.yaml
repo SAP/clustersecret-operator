@@ -166,4 +166,3 @@ jobs:
       with:
         name: image_webhook.tar
         path: ${{ runner.temp }}/image_webhook.tar
-
