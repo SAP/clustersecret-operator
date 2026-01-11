@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -8,10 +8,10 @@ SPDX-License-Identifier: Apache-2.0
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 
-	v1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
-	corecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/client/applyconfiguration/core.cs.sap.com/v1alpha1"
+	corecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
+	applyconfigurationcorecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/client/applyconfiguration/core.cs.sap.com/v1alpha1"
 	scheme "github.com/sap/clustersecret-operator/pkg/client/clientset/versioned/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -27,36 +27,37 @@ type ClusterSecretsGetter interface {
 
 // ClusterSecretInterface has methods to work with ClusterSecret resources.
 type ClusterSecretInterface interface {
-	Create(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.CreateOptions) (*v1alpha1.ClusterSecret, error)
-	Update(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.UpdateOptions) (*v1alpha1.ClusterSecret, error)
+	Create(ctx context.Context, clusterSecret *corecssapcomv1alpha1.ClusterSecret, opts v1.CreateOptions) (*corecssapcomv1alpha1.ClusterSecret, error)
+	Update(ctx context.Context, clusterSecret *corecssapcomv1alpha1.ClusterSecret, opts v1.UpdateOptions) (*corecssapcomv1alpha1.ClusterSecret, error)
 	// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-	UpdateStatus(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.UpdateOptions) (*v1alpha1.ClusterSecret, error)
+	UpdateStatus(ctx context.Context, clusterSecret *corecssapcomv1alpha1.ClusterSecret, opts v1.UpdateOptions) (*corecssapcomv1alpha1.ClusterSecret, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha1.ClusterSecret, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha1.ClusterSecretList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*corecssapcomv1alpha1.ClusterSecret, error)
+	List(ctx context.Context, opts v1.ListOptions) (*corecssapcomv1alpha1.ClusterSecretList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.ClusterSecret, err error)
-	Apply(ctx context.Context, clusterSecret *corecssapcomv1alpha1.ClusterSecretApplyConfiguration, opts v1.ApplyOptions) (result *v1alpha1.ClusterSecret, err error)
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *corecssapcomv1alpha1.ClusterSecret, err error)
+	Apply(ctx context.Context, clusterSecret *applyconfigurationcorecssapcomv1alpha1.ClusterSecretApplyConfiguration, opts v1.ApplyOptions) (result *corecssapcomv1alpha1.ClusterSecret, err error)
 	// Add a +genclient:noStatus comment above the type to avoid generating ApplyStatus().
-	ApplyStatus(ctx context.Context, clusterSecret *corecssapcomv1alpha1.ClusterSecretApplyConfiguration, opts v1.ApplyOptions) (result *v1alpha1.ClusterSecret, err error)
+	ApplyStatus(ctx context.Context, clusterSecret *applyconfigurationcorecssapcomv1alpha1.ClusterSecretApplyConfiguration, opts v1.ApplyOptions) (result *corecssapcomv1alpha1.ClusterSecret, err error)
 	ClusterSecretExpansion
 }
 
 // clusterSecrets implements ClusterSecretInterface
 type clusterSecrets struct {
-	*gentype.ClientWithListAndApply[*v1alpha1.ClusterSecret, *v1alpha1.ClusterSecretList, *corecssapcomv1alpha1.ClusterSecretApplyConfiguration]
+	*gentype.ClientWithListAndApply[*corecssapcomv1alpha1.ClusterSecret, *corecssapcomv1alpha1.ClusterSecretList, *applyconfigurationcorecssapcomv1alpha1.ClusterSecretApplyConfiguration]
 }
 
 // newClusterSecrets returns a ClusterSecrets
 func newClusterSecrets(c *CoreV1alpha1Client) *clusterSecrets {
 	return &clusterSecrets{
-		gentype.NewClientWithListAndApply[*v1alpha1.ClusterSecret, *v1alpha1.ClusterSecretList, *corecssapcomv1alpha1.ClusterSecretApplyConfiguration](
+		gentype.NewClientWithListAndApply[*corecssapcomv1alpha1.ClusterSecret, *corecssapcomv1alpha1.ClusterSecretList, *applyconfigurationcorecssapcomv1alpha1.ClusterSecretApplyConfiguration](
 			"clustersecrets",
 			c.RESTClient(),
 			scheme.ParameterCodec,
 			"",
-			func() *v1alpha1.ClusterSecret { return &v1alpha1.ClusterSecret{} },
-			func() *v1alpha1.ClusterSecretList { return &v1alpha1.ClusterSecretList{} }),
+			func() *corecssapcomv1alpha1.ClusterSecret { return &corecssapcomv1alpha1.ClusterSecret{} },
+			func() *corecssapcomv1alpha1.ClusterSecretList { return &corecssapcomv1alpha1.ClusterSecretList{} },
+		),
 	}
 }

@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -8,168 +8,35 @@ SPDX-License-Identifier: Apache-2.0
 package fake
 
 import (
-	"context"
-	json "encoding/json"
-	"fmt"
-
 	v1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
 	corecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/client/applyconfiguration/core.cs.sap.com/v1alpha1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	labels "k8s.io/apimachinery/pkg/labels"
-	types "k8s.io/apimachinery/pkg/types"
-	watch "k8s.io/apimachinery/pkg/watch"
-	testing "k8s.io/client-go/testing"
+	typedcorecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/client/clientset/versioned/typed/core.cs.sap.com/v1alpha1"
+	gentype "k8s.io/client-go/gentype"
 )
 
-// FakeClusterSecrets implements ClusterSecretInterface
-type FakeClusterSecrets struct {
+// fakeClusterSecrets implements ClusterSecretInterface
+type fakeClusterSecrets struct {
+	*gentype.FakeClientWithListAndApply[*v1alpha1.ClusterSecret, *v1alpha1.ClusterSecretList, *corecssapcomv1alpha1.ClusterSecretApplyConfiguration]
 	Fake *FakeCoreV1alpha1
 }
 
-var clustersecretsResource = v1alpha1.SchemeGroupVersion.WithResource("clustersecrets")
-
-var clustersecretsKind = v1alpha1.SchemeGroupVersion.WithKind("ClusterSecret")
-
-// Get takes name of the clusterSecret, and returns the corresponding clusterSecret object, and an error if there is any.
-func (c *FakeClusterSecrets) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha1.ClusterSecret, err error) {
-	emptyResult := &v1alpha1.ClusterSecret{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootGetActionWithOptions(clustersecretsResource, name, options), emptyResult)
-	if obj == nil {
-		return emptyResult, err
+func newFakeClusterSecrets(fake *FakeCoreV1alpha1) typedcorecssapcomv1alpha1.ClusterSecretInterface {
+	return &fakeClusterSecrets{
+		gentype.NewFakeClientWithListAndApply[*v1alpha1.ClusterSecret, *v1alpha1.ClusterSecretList, *corecssapcomv1alpha1.ClusterSecretApplyConfiguration](
+			fake.Fake,
+			"",
+			v1alpha1.SchemeGroupVersion.WithResource("clustersecrets"),
+			v1alpha1.SchemeGroupVersion.WithKind("ClusterSecret"),
+			func() *v1alpha1.ClusterSecret { return &v1alpha1.ClusterSecret{} },
+			func() *v1alpha1.ClusterSecretList { return &v1alpha1.ClusterSecretList{} },
+			func(dst, src *v1alpha1.ClusterSecretList) { dst.ListMeta = src.ListMeta },
+			func(list *v1alpha1.ClusterSecretList) []*v1alpha1.ClusterSecret {
+				return gentype.ToPointerSlice(list.Items)
+			},
+			func(list *v1alpha1.ClusterSecretList, items []*v1alpha1.ClusterSecret) {
+				list.Items = gentype.FromPointerSlice(items)
+			},
+		),
+		fake,
 	}
-	return obj.(*v1alpha1.ClusterSecret), err
-}
-
-// List takes label and field selectors, and returns the list of ClusterSecrets that match those selectors.
-func (c *FakeClusterSecrets) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha1.ClusterSecretList, err error) {
-	emptyResult := &v1alpha1.ClusterSecretList{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootListActionWithOptions(clustersecretsResource, clustersecretsKind, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-
-	label, _, _ := testing.ExtractFromListOptions(opts)
-	if label == nil {
-		label = labels.Everything()
-	}
-	list := &v1alpha1.ClusterSecretList{ListMeta: obj.(*v1alpha1.ClusterSecretList).ListMeta}
-	for _, item := range obj.(*v1alpha1.ClusterSecretList).Items {
-		if label.Matches(labels.Set(item.Labels)) {
-			list.Items = append(list.Items, item)
-		}
-	}
-	return list, err
-}
-
-// Watch returns a watch.Interface that watches the requested clusterSecrets.
-func (c *FakeClusterSecrets) Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error) {
-	return c.Fake.
-		InvokesWatch(testing.NewRootWatchActionWithOptions(clustersecretsResource, opts))
-}
-
-// Create takes the representation of a clusterSecret and creates it.  Returns the server's representation of the clusterSecret, and an error, if there is any.
-func (c *FakeClusterSecrets) Create(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.CreateOptions) (result *v1alpha1.ClusterSecret, err error) {
-	emptyResult := &v1alpha1.ClusterSecret{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootCreateActionWithOptions(clustersecretsResource, clusterSecret, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.ClusterSecret), err
-}
-
-// Update takes the representation of a clusterSecret and updates it. Returns the server's representation of the clusterSecret, and an error, if there is any.
-func (c *FakeClusterSecrets) Update(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.UpdateOptions) (result *v1alpha1.ClusterSecret, err error) {
-	emptyResult := &v1alpha1.ClusterSecret{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootUpdateActionWithOptions(clustersecretsResource, clusterSecret, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.ClusterSecret), err
-}
-
-// UpdateStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeClusterSecrets) UpdateStatus(ctx context.Context, clusterSecret *v1alpha1.ClusterSecret, opts v1.UpdateOptions) (result *v1alpha1.ClusterSecret, err error) {
-	emptyResult := &v1alpha1.ClusterSecret{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootUpdateSubresourceActionWithOptions(clustersecretsResource, "status", clusterSecret, opts), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.ClusterSecret), err
-}
-
-// Delete takes name of the clusterSecret and deletes it. Returns an error if one occurs.
-func (c *FakeClusterSecrets) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
-	_, err := c.Fake.
-		Invokes(testing.NewRootDeleteActionWithOptions(clustersecretsResource, name, opts), &v1alpha1.ClusterSecret{})
-	return err
-}
-
-// DeleteCollection deletes a collection of objects.
-func (c *FakeClusterSecrets) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
-	action := testing.NewRootDeleteCollectionActionWithOptions(clustersecretsResource, opts, listOpts)
-
-	_, err := c.Fake.Invokes(action, &v1alpha1.ClusterSecretList{})
-	return err
-}
-
-// Patch applies the patch and returns the patched clusterSecret.
-func (c *FakeClusterSecrets) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha1.ClusterSecret, err error) {
-	emptyResult := &v1alpha1.ClusterSecret{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootPatchSubresourceActionWithOptions(clustersecretsResource, name, pt, data, opts, subresources...), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.ClusterSecret), err
-}
-
-// Apply takes the given apply declarative configuration, applies it and returns the applied clusterSecret.
-func (c *FakeClusterSecrets) Apply(ctx context.Context, clusterSecret *corecssapcomv1alpha1.ClusterSecretApplyConfiguration, opts v1.ApplyOptions) (result *v1alpha1.ClusterSecret, err error) {
-	if clusterSecret == nil {
-		return nil, fmt.Errorf("clusterSecret provided to Apply must not be nil")
-	}
-	data, err := json.Marshal(clusterSecret)
-	if err != nil {
-		return nil, err
-	}
-	name := clusterSecret.Name
-	if name == nil {
-		return nil, fmt.Errorf("clusterSecret.Name must be provided to Apply")
-	}
-	emptyResult := &v1alpha1.ClusterSecret{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootPatchSubresourceActionWithOptions(clustersecretsResource, *name, types.ApplyPatchType, data, opts.ToPatchOptions()), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.ClusterSecret), err
-}
-
-// ApplyStatus was generated because the type contains a Status member.
-// Add a +genclient:noStatus comment above the type to avoid generating ApplyStatus().
-func (c *FakeClusterSecrets) ApplyStatus(ctx context.Context, clusterSecret *corecssapcomv1alpha1.ClusterSecretApplyConfiguration, opts v1.ApplyOptions) (result *v1alpha1.ClusterSecret, err error) {
-	if clusterSecret == nil {
-		return nil, fmt.Errorf("clusterSecret provided to Apply must not be nil")
-	}
-	data, err := json.Marshal(clusterSecret)
-	if err != nil {
-		return nil, err
-	}
-	name := clusterSecret.Name
-	if name == nil {
-		return nil, fmt.Errorf("clusterSecret.Name must be provided to Apply")
-	}
-	emptyResult := &v1alpha1.ClusterSecret{}
-	obj, err := c.Fake.
-		Invokes(testing.NewRootPatchSubresourceActionWithOptions(clustersecretsResource, *name, types.ApplyPatchType, data, opts.ToPatchOptions(), "status"), emptyResult)
-	if obj == nil {
-		return emptyResult, err
-	}
-	return obj.(*v1alpha1.ClusterSecret), err
 }

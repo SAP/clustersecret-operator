@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -8,20 +8,32 @@ SPDX-License-Identifier: Apache-2.0
 package v1alpha1
 
 import (
-	v1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
+	corecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // ClusterSecretConditionApplyConfiguration represents a declarative configuration of the ClusterSecretCondition type for use
 // with apply.
+//
+// Condition represents a certain aspect of the overall state of a ClusterSecret object
 type ClusterSecretConditionApplyConfiguration struct {
-	Type               *v1alpha1.ClusterSecretConditionType `json:"type,omitempty"`
-	Status             *v1.ConditionStatus                  `json:"status,omitempty"`
-	LastUpdateTime     *metav1.Time                         `json:"lastUpdateTime,omitempty"`
-	LastTransitionTime *metav1.Time                         `json:"lastTransitionTime,omitempty"`
-	Reason             *string                              `json:"reason,omitempty"`
-	Message            *string                              `json:"message,omitempty"`
+	// Type of the condition, known values are ('Ready').
+	Type *corecssapcomv1alpha1.ClusterSecretConditionType `json:"type,omitempty"`
+	// Status of the condition, one of ('True', 'False', 'Unknown').
+	Status *v1.ConditionStatus `json:"status,omitempty"`
+	// LastUpdateTime is the timestamp corresponding to the last status
+	// update to this condition.
+	LastUpdateTime *metav1.Time `json:"lastUpdateTime,omitempty"`
+	// LastTransitionTime is the timestamp corresponding to the last status
+	// change of this condition.
+	LastTransitionTime *metav1.Time `json:"lastTransitionTime,omitempty"`
+	// Reason is a brief machine readable explanation for the condition's last
+	// transition.
+	Reason *string `json:"reason,omitempty"`
+	// Message is a human readable description of the details of the last
+	// transition, complementing reason.
+	Message *string `json:"message,omitempty"`
 }
 
 // ClusterSecretConditionApplyConfiguration constructs a declarative configuration of the ClusterSecretCondition type for use with
@@ -33,7 +45,7 @@ func ClusterSecretCondition() *ClusterSecretConditionApplyConfiguration {
 // WithType sets the Type field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Type field is set to the value of the last call.
-func (b *ClusterSecretConditionApplyConfiguration) WithType(value v1alpha1.ClusterSecretConditionType) *ClusterSecretConditionApplyConfiguration {
+func (b *ClusterSecretConditionApplyConfiguration) WithType(value corecssapcomv1alpha1.ClusterSecretConditionType) *ClusterSecretConditionApplyConfiguration {
 	b.Type = &value
 	return b
 }

@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -8,13 +8,13 @@ SPDX-License-Identifier: Apache-2.0
 package v1alpha1
 
 import (
-	"context"
+	context "context"
 	time "time"
 
-	corecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
+	apiscorecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/apis/core.cs.sap.com/v1alpha1"
 	versioned "github.com/sap/clustersecret-operator/pkg/client/clientset/versioned"
 	internalinterfaces "github.com/sap/clustersecret-operator/pkg/client/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/sap/clustersecret-operator/pkg/client/listers/core.cs.sap.com/v1alpha1"
+	corecssapcomv1alpha1 "github.com/sap/clustersecret-operator/pkg/client/listers/core.cs.sap.com/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -25,7 +25,7 @@ import (
 // ClusterSecrets.
 type ClusterSecretInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1alpha1.ClusterSecretLister
+	Lister() corecssapcomv1alpha1.ClusterSecretLister
 }
 
 type clusterSecretInformer struct {
@@ -45,21 +45,33 @@ func NewClusterSecretInformer(client versioned.Interface, resyncPeriod time.Dura
 // one. This reduces memory footprint and number of connections to the server.
 func NewFilteredClusterSecretInformer(client versioned.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
-		&cache.ListWatch{
+		cache.ToListWatcherWithWatchListSemantics(&cache.ListWatch{
 			ListFunc: func(options v1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.CoreV1alpha1().ClusterSecrets().List(context.TODO(), options)
+				return client.CoreV1alpha1().ClusterSecrets().List(context.Background(), options)
 			},
 			WatchFunc: func(options v1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.CoreV1alpha1().ClusterSecrets().Watch(context.TODO(), options)
+				return client.CoreV1alpha1().ClusterSecrets().Watch(context.Background(), options)
 			},
-		},
-		&corecssapcomv1alpha1.ClusterSecret{},
+			ListWithContextFunc: func(ctx context.Context, options v1.ListOptions) (runtime.Object, error) {
+				if tweakListOptions != nil {
+					tweakListOptions(&options)
+				}
+				return client.CoreV1alpha1().ClusterSecrets().List(ctx, options)
+			},
+			WatchFuncWithContext: func(ctx context.Context, options v1.ListOptions) (watch.Interface, error) {
+				if tweakListOptions != nil {
+					tweakListOptions(&options)
+				}
+				return client.CoreV1alpha1().ClusterSecrets().Watch(ctx, options)
+			},
+		}, client),
+		&apiscorecssapcomv1alpha1.ClusterSecret{},
 		resyncPeriod,
 		indexers,
 	)
@@ -70,9 +82,9 @@ func (f *clusterSecretInformer) defaultInformer(client versioned.Interface, resy
 }
 
 func (f *clusterSecretInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&corecssapcomv1alpha1.ClusterSecret{}, f.defaultInformer)
+	return f.factory.InformerFor(&apiscorecssapcomv1alpha1.ClusterSecret{}, f.defaultInformer)
 }
 
-func (f *clusterSecretInformer) Lister() v1alpha1.ClusterSecretLister {
-	return v1alpha1.NewClusterSecretLister(f.Informer().GetIndexer())
+func (f *clusterSecretInformer) Lister() corecssapcomv1alpha1.ClusterSecretLister {
+	return corecssapcomv1alpha1.NewClusterSecretLister(f.Informer().GetIndexer())
 }

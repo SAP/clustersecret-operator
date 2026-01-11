@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -18,7 +18,7 @@ type FakeCoreV1alpha1 struct {
 }
 
 func (c *FakeCoreV1alpha1) ClusterSecrets() v1alpha1.ClusterSecretInterface {
-	return &FakeClusterSecrets{c}
+	return newFakeClusterSecrets(c)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

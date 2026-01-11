@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -13,9 +13,14 @@ import (
 
 // SecretTemplateSpecApplyConfiguration represents a declarative configuration of the SecretTemplateSpec type for use
 // with apply.
+//
+// SecretTemplateSpec defines how the managed secrets should look like
 type SecretTemplateSpecApplyConfiguration struct {
-	Type       *v1.SecretType    `json:"type,omitempty"`
-	Data       map[string][]byte `json:"data,omitempty"`
+	// Secret type
+	Type *v1.SecretType `json:"type,omitempty"`
+	// Secret data as base64 encoded raw data
+	Data map[string][]byte `json:"data,omitempty"`
+	// Secret data as string
 	StringData map[string]string `json:"stringData,omitempty"`
 }
 

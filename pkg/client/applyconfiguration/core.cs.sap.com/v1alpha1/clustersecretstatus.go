@@ -1,5 +1,5 @@
 /*
-SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and clustersecret-operator contributors
+SPDX-FileCopyrightText: 2026 SAP SE or an SAP affiliate company and clustersecret-operator contributors
 SPDX-License-Identifier: Apache-2.0
 */
 
@@ -9,10 +9,15 @@ package v1alpha1
 
 // ClusterSecretStatusApplyConfiguration represents a declarative configuration of the ClusterSecretStatus type for use
 // with apply.
+//
+// ClusterSecretStatus reflects the actual state of ClusterSecret
 type ClusterSecretStatusApplyConfiguration struct {
-	ObservedGeneration *int64                                     `json:"observedGeneration,omitempty"`
-	State              *string                                    `json:"state,omitempty"`
-	Conditions         []ClusterSecretConditionApplyConfiguration `json:"conditions,omitempty"`
+	// Observed generation
+	ObservedGeneration *int64 `json:"observedGeneration,omitempty"`
+	// State in a short human readable form
+	State *string `json:"state,omitempty"`
+	// State expressed as conditions (for usage with kubectl wait et al.)
+	Conditions []ClusterSecretConditionApplyConfiguration `json:"conditions,omitempty"`
 }
 
 // ClusterSecretStatusApplyConfiguration constructs a declarative configuration of the ClusterSecretStatus type for use with
