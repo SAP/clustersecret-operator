@@ -154,4 +154,6 @@ jobs:
         GH_TOKEN: ${{ secrets.WORKFLOW_USER_GH_TOKEN }}
       run: |
         gh release create ${{ steps.get_target_release.outputs.tag }} \
-          --target "${{ steps.get_target_commit.outputs.sha }}"
+          --target "${{ steps.get_target_commit.outputs.sha }}" \
+          --title "${{ steps.get_target_release.outputs.tag }}" \
+          --generate-notes
