@@ -37,3 +37,7 @@ func (lw *listerWatcher) List(opts metav1.ListOptions) (runtime.Object, error) {
 func (lw *listerWatcher) Watch(opts metav1.ListOptions) (watch.Interface, error) {
 	return lw.fake.InvokesWatch(testing.NewRootWatchAction(lw.gvr, opts))
 }
+
+func (lw *listerWatcher) IsWatchListSemanticsUnSupported() bool {
+	return true
+}
