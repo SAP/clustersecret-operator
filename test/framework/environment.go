@@ -565,7 +565,7 @@ func (env *environmentImpl) WaitForObject(obj runtime.Object, conditions ...watc
 		if err == nil {
 			return env.asTyped(event.Object), nil
 		}
-		if err == wait.ErrWaitTimeout {
+		if wait.Interrupted(err) {
 			if _, err := env.getObject(gvk, namespace, name); err != nil && errors.IsNotFound(err) {
 				return nil, err
 			}

@@ -18,7 +18,7 @@ type FakeCoreV1alpha1 struct {
 }
 
 func (c *FakeCoreV1alpha1) ClusterSecrets() v1alpha1.ClusterSecretInterface {
-	return &FakeClusterSecrets{c}
+	return newFakeClusterSecrets(c)
 }
 
 // RESTClient returns a RESTClient that is used to communicate

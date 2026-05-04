@@ -8,8 +8,8 @@ SPDX-License-Identifier: Apache-2.0
 package versioned
 
 import (
-	"fmt"
-	"net/http"
+	fmt "fmt"
+	http "net/http"
 
 	corev1alpha1 "github.com/sap/clustersecret-operator/pkg/client/clientset/versioned/typed/core.cs.sap.com/v1alpha1"
 	discovery "k8s.io/client-go/discovery"
