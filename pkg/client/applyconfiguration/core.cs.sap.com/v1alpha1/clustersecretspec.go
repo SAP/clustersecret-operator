@@ -13,9 +13,13 @@ import (
 
 // ClusterSecretSpecApplyConfiguration represents a declarative configuration of the ClusterSecretSpec type for use
 // with apply.
+//
+// ClusterSecretSpec defines the desired state of ClusterSecret
 type ClusterSecretSpecApplyConfiguration struct {
-	NamespaceSelector *v1.LabelSelectorApplyConfiguration   `json:"namespaceSelector,omitempty"`
-	Template          *SecretTemplateSpecApplyConfiguration `json:"template,omitempty"`
+	// Namespace selector; defines to which namespaces the secrets will be distributed
+	NamespaceSelector *v1.LabelSelectorApplyConfiguration `json:"namespaceSelector,omitempty"`
+	// Secret template; defines how the distributed secrets shall look like
+	Template *SecretTemplateSpecApplyConfiguration `json:"template,omitempty"`
 }
 
 // ClusterSecretSpecApplyConfiguration constructs a declarative configuration of the ClusterSecretSpec type for use with
