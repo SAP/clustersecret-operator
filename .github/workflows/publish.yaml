@@ -171,6 +171,7 @@ jobs:
   update-chart:
     name: Update Helm chart
     runs-on: ubuntu-24.04
+    environment: release
     needs: [publish-docker_controller,publish-docker_webhook,publish-crds]
 
     steps:
