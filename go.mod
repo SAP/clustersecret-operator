@@ -1,6 +1,6 @@
 module github.com/sap/clustersecret-operator
 
-go 1.26.3
+go 1.26.4
 
 require (
 	github.com/evanphx/json-patch/v5 v5.9.11
@@ -8,10 +8,10 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/spf13/pflag v1.0.10
 	gopkg.in/yaml.v3 v3.0.1
-	k8s.io/api v0.36.0
-	k8s.io/apimachinery v0.36.0
-	k8s.io/client-go v0.36.0
-	k8s.io/code-generator v0.36.0
+	k8s.io/api v0.36.2
+	k8s.io/apimachinery v0.36.2
+	k8s.io/client-go v0.36.2
+	k8s.io/code-generator v0.36.2
 	k8s.io/klog/v2 v2.140.0
 	sigs.k8s.io/structured-merge-diff/v6 v6.4.0
 )
