@@ -40,14 +40,14 @@ jobs:
         sudo snap install dart-sass-embedded
 
     - name: Checkout
-      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       with:
         submodules: recursive
         fetch-depth: 0
 
     - name: Setup Pages
       id: pages
-      uses: actions/configure-pages@v5
+      uses: actions/configure-pages@v6
 
     - name: Get node version from package.json
       id: get_node_version
@@ -79,7 +79,7 @@ jobs:
           --baseURL "${{ steps.pages.outputs.base_url }}/"            
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v4
+      uses: actions/upload-pages-artifact@v5
       with:
         path: website/public
 
@@ -93,5 +93,5 @@ jobs:
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v4
+      uses: actions/deploy-pages@v5
 
