@@ -1,6 +1,6 @@
 module github.com/sap/clustersecret-operator
 
-go 1.26.4
+go 1.26.5
 
 require (
 	github.com/evanphx/json-patch/v5 v5.9.11
@@ -13,7 +13,7 @@ require (
 	k8s.io/client-go v0.36.2
 	k8s.io/code-generator v0.36.2
 	k8s.io/klog/v2 v2.140.0
-	sigs.k8s.io/structured-merge-diff/v6 v6.4.1
+	sigs.k8s.io/structured-merge-diff/v6 v6.4.2
 )
 
 require (
