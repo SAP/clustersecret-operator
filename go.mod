@@ -1,6 +1,6 @@
 module github.com/sap/clustersecret-operator
 
-go 1.26.5
+go 1.26.6
 
 require (
 	github.com/evanphx/json-patch/v5 v5.9.11
