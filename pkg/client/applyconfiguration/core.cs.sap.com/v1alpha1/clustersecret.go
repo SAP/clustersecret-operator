@@ -18,7 +18,7 @@ import (
 //
 // ClusterSecret is the Schema for the clustersecrets API
 type ClusterSecretApplyConfiguration struct {
-	v1.TypeMetaApplyConfiguration    `json:",inline"`
+	v1.TypeMetaApplyConfiguration    `json:""`
 	*v1.ObjectMetaApplyConfiguration `json:"metadata,omitempty"`
 	// ClusterSecret spec
 	Spec *ClusterSecretSpecApplyConfiguration `json:"spec,omitempty"`
