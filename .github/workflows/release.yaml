@@ -35,7 +35,7 @@ defaults:
 jobs:
   release:
     name: Trigger release
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment: release
     permissions:
       contents: write
@@ -148,6 +148,7 @@ jobs:
         timeoutSeconds: 1800
         failStepIfUnsuccessful: true
         appSlugFilter: github-actions
+
 
     - name: Generate release notes
       id: release_notes
