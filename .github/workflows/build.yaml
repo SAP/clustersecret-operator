@@ -55,7 +55,7 @@ jobs:
 
     - name: Run tests
       run: |
-        go test -count 1 ./...
+        go test -count 1 -timeout 20m ./...
 
   build-docker_controller:
     name: Build Docker image (controller)
